@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dream Journal</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #5c6bc0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    button {
+      background-color: #5c6bc0;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #3949ab;
+    }
+    .dream-list {
+      margin-top: 20px;
+    }
+    .dream-item {
+      background: #f9f9f9;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    .dream-item p {
+      margin: 0;
+    }
+    .dream-item small {
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Dream Journal</h1>
+    <textarea id="dreamInput" placeholder="Describe your dream..."></textarea>
+    <button onclick="saveDream()">Save Dream</button>
+    <div class="dream-list" id="dreamList"></div>
+  </div>
+
+  <script>
+    // Load saved dreams from localStorage
+    const dreams = JSON.parse(localStorage.getItem('dreams')) || [];
+
+    // Function to save a dream
+    function saveDream() {
+      const dreamInput = document.getElementById('dreamInput');
+      const dreamText = dreamInput.value.trim();
+
+      if (dreamText === '') {
+        alert('Please enter a dream description.');
+        return;
+      }
+
+      const newDream = {
+        text: dreamText,
+        date: new Date().toLocaleString(),
+      };
+
+      dreams.push(newDream);
+      localStorage.setItem('dreams', JSON.stringify(dreams));
+      dreamInput.value = '';
+      displayDreams();
+    }
+
+    // Function to display dreams
+    function displayDreams() {
+      const dreamList = document.getElementById('dreamList');
+      dreamList.innerHTML = '';
+
+      dreams.forEach((dream, index) => {
+        const dreamItem = document.createElement('div');
+        dreamItem.className = 'dream-item';
+        dreamItem.innerHTML = `
+          <p>${dream.text}</p>
+          <small>${dream.date}</small>
+        `;
+        dreamList.appendChild(dreamItem);
+      });
+    }
+
+    // Display dreams on page load
+    displayDreams();
+  </script>
+</body>
+</html>

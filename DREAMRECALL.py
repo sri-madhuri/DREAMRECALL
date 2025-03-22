@@ -1,6 +1,5 @@
 import time
 import random
-import sounddevice as sd  # For playing sound cues
 import numpy as np  # For generating sound tones
 from scipy.io.wavfile import write  # For saving sound cues
 import requests  # For API integration (e.g., sleep tracking)
@@ -19,11 +18,6 @@ def generate_sound_cue(frequency=440, duration=1):
     audio = np.int16(tone * 32767)
     return sample_rate, audio
 
-def play_sound_cue(frequency=440, duration=1):
-    """Play a sound cue using sounddevice."""
-    sample_rate, audio = generate_sound_cue(frequency, duration)
-    sd.play(audio, sample_rate)
-    sd.wait()
 
 def dream_journal():
     """Prompt the user to record their dream."""
